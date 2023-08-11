@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmControlePecasProduzidas));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,12 +45,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnSalvar = new System.Windows.Forms.Button();
-            this.dbCheckPecasDataSet = new CheckPecas.dbCheckPecasDataSet();
-            this.tblPecasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tblPecasTableAdapter = new CheckPecas.dbCheckPecasDataSetTableAdapters.tblPecasTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dbCheckPecasDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tblPecasBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -133,8 +127,6 @@
             // 
             // cbPecas
             // 
-            this.cbPecas.DataSource = this.tblPecasBindingSource;
-            this.cbPecas.DisplayMember = "nomePeca";
             this.cbPecas.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPecas.FormattingEnabled = true;
             this.cbPecas.Location = new System.Drawing.Point(230, 85);
@@ -181,6 +173,7 @@
             this.txtReprovadas.Name = "txtReprovadas";
             this.txtReprovadas.Size = new System.Drawing.Size(108, 23);
             this.txtReprovadas.TabIndex = 13;
+            this.txtReprovadas.TextChanged += new System.EventHandler(this.txtReprovadas_TextChanged);
             // 
             // label7
             // 
@@ -213,20 +206,6 @@
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             // 
-            // dbCheckPecasDataSet
-            // 
-            this.dbCheckPecasDataSet.DataSetName = "dbCheckPecasDataSet";
-            this.dbCheckPecasDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // tblPecasBindingSource
-            // 
-            this.tblPecasBindingSource.DataMember = "tblPecas";
-            this.tblPecasBindingSource.DataSource = this.dbCheckPecasDataSet;
-            // 
-            // tblPecasTableAdapter
-            // 
-            this.tblPecasTableAdapter.ClearBeforeFill = true;
-            // 
             // frmControlePecasProduzidas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -253,8 +232,6 @@
             this.Text = "Controle de Peças Produzidas";
             this.Load += new System.EventHandler(this.frmControlePecasProduzidas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dbCheckPecasDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tblPecasBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,8 +255,5 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnSalvar;
-        private dbCheckPecasDataSet dbCheckPecasDataSet;
-        private System.Windows.Forms.BindingSource tblPecasBindingSource;
-        private dbCheckPecasDataSetTableAdapters.tblPecasTableAdapter tblPecasTableAdapter;
     }
 }
