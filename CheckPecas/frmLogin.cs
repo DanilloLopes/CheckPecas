@@ -22,49 +22,59 @@ namespace CheckPecas
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            string usuario = txtUsuario.Text;
-            string senha = txtSenha.Text;
-
-            conexao = new SqlConnection(strConexao); //INSTANCIA
-            SqlCommand cmd = new SqlCommand();//comando de conecao
-            cmd.Connection = conexao;
-            cmd.CommandText = "SELECT loginUsuario FROM tblUsuarios WHERE loginUsuario = @valor";
-            cmd.Parameters.AddWithValue("@valor", usuario);
-
-            conexao.Open();//abriu conexao
-
-            if(cmd.ExecuteScalar() == null)//executa o comando de conecao
+            if(!string.IsNullOrEmpty(txtUsuario.Text) && !string.IsNullOrEmpty(txtSenha.Text))
             {
-                DialogResult resposta = MessageBox.Show("Usuário inexistente! Deseja realizar o cadastro?", "Cadastro", MessageBoxButtons.YesNo,MessageBoxIcon.Question);
-                if(resposta == DialogResult.Yes) //PRECISA AJUSTAR: SENHA NULL REGISTRA
-                {
-                    cmd.CommandText = "INSERT INTO tblUsuarios VALUES(@login,@senha)";
-                    cmd.Parameters.AddWithValue("@login", usuario);
-                    cmd.Parameters.AddWithValue("@senha", senha);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Cadastro realizado com sucesso!");
-                }
-                else
-                {
-                    txtUsuario.ResetText();
-                    txtSenha.ResetText();
-                }
-            }
-            else
-            {
-                cmd.CommandText = "SELECT senhaUsuario FROM tblUsuarios WHERE loginUsuario = @user";
-                cmd.Parameters.AddWithValue("@user", usuario);
-                if(senha != cmd.ExecuteScalar().ToString())
-                {
-                    MessageBox.Show("A senha não confere!");
-                }
-                else
+                string usuario = txtUsuario.Text;
+                string senha = txtSenha.Text;
+
+                conexao = new SqlConnection(strConexao); //INSTANCIA
+                SqlCommand cmd = new SqlCommand();//comando de conecao
+                cmd.Connection = conexao;
+                cmd.CommandText = "SELECT senhaUsuario FROM tblUsuarios WHERE loginUsuario = @valor";
+                cmd.Parameters.AddWithValue("@valor", usuario);
+
+                conexao.Open();//abriu conexao
+
+                var senhaTbl = cmd.ExecuteScalar() ?? "";
+                
+                if(senha == senhaTbl.ToString())
                 {
                     frmControlePecasProduzidas fControle = new frmControlePecasProduzidas();
                     fControle.ShowDialog();
-
                 }
+                else
+                {
+                    if(senhaTbl.ToString() == "")
+                    {
+                        DialogResult resposta = MessageBox.Show("Usuário inexistente! Deseja realizar o cadastro?", "Cadastro", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (resposta == DialogResult.Yes) //PRECISA AJUSTAR: SENHA NULL REGISTRA
+                        {
+                            cmd.CommandText = "INSERT INTO tblUsuarios VALUES(@login,@senha)";
+                            cmd.Parameters.AddWithValue("@login", usuario);
+                            cmd.Parameters.AddWithValue("@senha", senha);
+                            cmd.ExecuteNonQuery();
+                            MessageBox.Show("Cadastro realizado com sucesso!");
+                        }
+                        else
+                        {
+                            txtUsuario.ResetText();
+                            txtSenha.ResetText();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("A senha não confere!");
+                    }
+                }
+
             }
+            else
+            {
+                MessageBox.Show("Usuário ou Senha não preenchidos!");
+            }
+           
         }
+
+        
     }
 }

@@ -30,17 +30,21 @@ namespace CheckPecas
 
             mtxtData.Focus();
         }
-
         private void mtxtData_Leave(object sender, EventArgs e)
         {
-            if (DateTime.Parse(mtxtData.Text) > System.DateTime.Now)
+            if (!mtxtData.MaskCompleted)
+            {
+                MessageBox.Show("Data inválida!");
+                mtxtData.Focus();
+                return;
+            }
+            if (DateTime.Parse(mtxtData.Text) > DateTime.Now )
             {
                 MessageBox.Show("Data inválida!");
                 mtxtData.ResetText();
                 mtxtData.Focus();
             }
         }
-
         private void txtReprovadas_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtReprovadas.Text))
