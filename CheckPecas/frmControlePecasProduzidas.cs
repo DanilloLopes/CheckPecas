@@ -28,6 +28,12 @@ namespace CheckPecas
             cbPecas.DisplayMember = "nomePeca";
             cbPecas.ValueMember = "codigo";
 
+            cbPecas.SelectedIndex = -1;
+            cbPecas.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            txtReprovadas.Enabled = false;
+            txtAprovadas.Enabled = false;
+
             mtxtData.Focus();
         }
         private void mtxtData_Leave(object sender, EventArgs e)
@@ -63,6 +69,13 @@ namespace CheckPecas
             {
                 txtPrejuizo.ResetText();
             }
+        }
+
+        private void cbPecas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtAprovadas.Enabled = true;
+            txtReprovadas.Enabled = true;
+
         }
     }
 }

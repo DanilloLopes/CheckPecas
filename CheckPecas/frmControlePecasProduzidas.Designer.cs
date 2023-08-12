@@ -133,9 +133,11 @@
             this.cbPecas.Name = "cbPecas";
             this.cbPecas.Size = new System.Drawing.Size(221, 26);
             this.cbPecas.TabIndex = 7;
+            this.cbPecas.SelectedIndexChanged += new System.EventHandler(this.cbPecas_SelectedIndexChanged);
             // 
             // txtAprovadas
             // 
+            this.txtAprovadas.Enabled = false;
             this.txtAprovadas.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAprovadas.Location = new System.Drawing.Point(230, 144);
             this.txtAprovadas.Name = "txtAprovadas";
@@ -144,6 +146,7 @@
             // 
             // txtProduzidas
             // 
+            this.txtProduzidas.Enabled = false;
             this.txtProduzidas.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtProduzidas.Location = new System.Drawing.Point(230, 255);
             this.txtProduzidas.Name = "txtProduzidas";
@@ -152,6 +155,7 @@
             // 
             // txtPrejuizo
             // 
+            this.txtPrejuizo.Enabled = false;
             this.txtPrejuizo.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPrejuizo.Location = new System.Drawing.Point(230, 311);
             this.txtPrejuizo.Name = "txtPrejuizo";
@@ -160,6 +164,7 @@
             // 
             // txtemail
             // 
+            this.txtemail.Enabled = false;
             this.txtemail.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtemail.Location = new System.Drawing.Point(230, 370);
             this.txtemail.Name = "txtemail";
@@ -168,6 +173,7 @@
             // 
             // txtReprovadas
             // 
+            this.txtReprovadas.Enabled = false;
             this.txtReprovadas.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtReprovadas.Location = new System.Drawing.Point(230, 199);
             this.txtReprovadas.Name = "txtReprovadas";
