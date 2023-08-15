@@ -40,7 +40,7 @@
             this.txtAprovadas = new System.Windows.Forms.TextBox();
             this.txtProduzidas = new System.Windows.Forms.TextBox();
             this.txtPrejuizo = new System.Windows.Forms.TextBox();
-            this.txtemail = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtReprovadas = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -134,6 +134,7 @@
             this.cbPecas.Size = new System.Drawing.Size(221, 26);
             this.cbPecas.TabIndex = 7;
             this.cbPecas.SelectedIndexChanged += new System.EventHandler(this.cbPecas_SelectedIndexChanged);
+            this.cbPecas.SelectedValueChanged += new System.EventHandler(this.Valores_TextChanged);
             // 
             // txtAprovadas
             // 
@@ -143,6 +144,8 @@
             this.txtAprovadas.Name = "txtAprovadas";
             this.txtAprovadas.Size = new System.Drawing.Size(110, 23);
             this.txtAprovadas.TabIndex = 8;
+            this.txtAprovadas.TextChanged += new System.EventHandler(this.Valores_TextChanged);
+            this.txtAprovadas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this._KeyPress);
             // 
             // txtProduzidas
             // 
@@ -162,14 +165,14 @@
             this.txtPrejuizo.Size = new System.Drawing.Size(172, 23);
             this.txtPrejuizo.TabIndex = 10;
             // 
-            // txtemail
+            // txtEmail
             // 
-            this.txtemail.Enabled = false;
-            this.txtemail.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtemail.Location = new System.Drawing.Point(230, 370);
-            this.txtemail.Name = "txtemail";
-            this.txtemail.Size = new System.Drawing.Size(221, 23);
-            this.txtemail.TabIndex = 11;
+            this.txtEmail.Enabled = false;
+            this.txtEmail.Font = new System.Drawing.Font("Trebuchet MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEmail.Location = new System.Drawing.Point(230, 370);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(221, 23);
+            this.txtEmail.TabIndex = 11;
             // 
             // txtReprovadas
             // 
@@ -179,7 +182,8 @@
             this.txtReprovadas.Name = "txtReprovadas";
             this.txtReprovadas.Size = new System.Drawing.Size(108, 23);
             this.txtReprovadas.TabIndex = 13;
-            this.txtReprovadas.TextChanged += new System.EventHandler(this.txtReprovadas_TextChanged);
+            this.txtReprovadas.TextChanged += new System.EventHandler(this.Valores_TextChanged);
+            this.txtReprovadas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this._KeyPress);
             // 
             // label7
             // 
@@ -211,6 +215,7 @@
             this.btnSalvar.TabIndex = 15;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // frmControlePecasProduzidas
             // 
@@ -222,7 +227,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtReprovadas);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.txtemail);
+            this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.txtPrejuizo);
             this.Controls.Add(this.txtProduzidas);
             this.Controls.Add(this.txtAprovadas);
@@ -234,6 +239,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.KeyPreview = true;
             this.Name = "frmControlePecasProduzidas";
             this.Text = "Controle de Peças Produzidas";
             this.Load += new System.EventHandler(this.frmControlePecasProduzidas_Load);
@@ -256,7 +262,7 @@
         private System.Windows.Forms.TextBox txtAprovadas;
         private System.Windows.Forms.TextBox txtProduzidas;
         private System.Windows.Forms.TextBox txtPrejuizo;
-        private System.Windows.Forms.TextBox txtemail;
+        private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.TextBox txtReprovadas;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.PictureBox pictureBox1;

@@ -15,6 +15,9 @@ namespace CheckPecas
     {
         string strConexao = @"Data Source=.\SQLEXPRESS;Initial Catalog=dbCheckPecas;User ID=sa;Password=sql2022";//
         SqlConnection conexao;//objeto de conecao
+
+        int codigo;
+
         public frmLogin()
         {
             InitializeComponent();
@@ -39,7 +42,14 @@ namespace CheckPecas
                 
                 if(senha == senhaTbl.ToString())
                 {
+
+                    cmd.CommandText = "SELECT codigo FROM tblUsuarios WHERE loginUsuario = @valor";
+                    cmd.Parameters.AddWithValue("@valor", usuario);
+
+                    codigo = Convert.ToInt32(cmd.ExecuteScalar());
+
                     frmControlePecasProduzidas fControle = new frmControlePecasProduzidas();
+                    fControle.cod = codigo;
                     fControle.ShowDialog();
                 }
                 else
