@@ -16,7 +16,7 @@ namespace CheckPecas
         string strConexao = @"Data Source=.\SQLEXPRESS;Initial Catalog=dbCheckPecas;User ID=sa;Password=sql2022";
         SqlConnection conexao;
 
-        public int cod = -1;
+        public int cod = 11;
 
         public frmControlePecasProduzidas()
         {
@@ -31,14 +31,19 @@ namespace CheckPecas
             cbPecas.DataSource = tabela;
             cbPecas.DisplayMember = "nomePeca";
             cbPecas.ValueMember = "codigo";
+            
 
             cbPecas.SelectedIndex = -1;
             cbPecas.DropDownStyle = ComboBoxStyle.DropDownList;
 
+            txtReprovadas.ResetText();
             txtReprovadas.Enabled = false;
             txtAprovadas.Enabled = false;
+            txtAprovadas.ResetText();
             txtEmail.Enabled = false;
+            txtEmail.ResetText();
             txtPrejuizo.Enabled = false;
+            txtPrejuizo.ResetText();
 
             mtxtData.Focus();
         }
@@ -47,15 +52,15 @@ namespace CheckPecas
         {
             if (!mtxtData.MaskCompleted)
             {
-                MessageBox.Show("Data inválida!");
-                mtxtData.Focus();
-                return;
+                 MessageBox.Show("Data inválida!");
+                 mtxtData.Focus();
+                 return;
             }
             if (DateTime.Parse(mtxtData.Text) > DateTime.Now )
             {
-                MessageBox.Show("Data inválida!");
-                mtxtData.ResetText();
-                mtxtData.Focus();
+                 MessageBox.Show("Data inválida!");
+                 mtxtData.ResetText();
+                 mtxtData.Focus();
             }
         }
 
@@ -87,6 +92,7 @@ namespace CheckPecas
                         txtAprovadas.ResetText();
                         txtEmail.ResetText();
                         txtPrejuizo.ResetText();
+                        conexao.Close();
 
                         return;
                     }
@@ -97,11 +103,14 @@ namespace CheckPecas
                 }
                 else
                 {
+                    conexao.Close();
                     txtProduzidas.ResetText();
                 }
 
                 double prejuTotal = valorPreju * pecasReprovadas;
-                
+                conexao.Close();
+
+
                 txtPrejuizo.Text = prejuTotal.ToString();
 
                 if(pecasReprovadas < 10)
@@ -134,10 +143,32 @@ namespace CheckPecas
                 e.Handled = true;
             }
         }
+        private void reiniciar()
+        {
+            txtReprovadas.ResetText();
+            txtReprovadas.Enabled = false;
+            
+            txtAprovadas.ResetText();
+            txtAprovadas.Enabled = false;
+
+            txtEmail.ResetText();
+            txtEmail.Enabled = false;
+
+            txtPrejuizo.ResetText();
+            txtPrejuizo.Enabled = false;
+
+            cbPecas.SelectedIndex = -1;
+            cbPecas.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            mtxtData.Clear();
+            mtxtData.Focus();
+        }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if(cbPecas.SelectedIndex != -1 && !string.IsNullOrEmpty(txtProduzidas.Text)) 
+
+   
+            if (cbPecas.SelectedIndex != -1 && !string.IsNullOrEmpty(txtProduzidas.Text)) 
             {
                 if(int.Parse(txtReprovadas.Text) > 10 && string.IsNullOrEmpty(txtEmail.Text))
                 {
@@ -145,13 +176,62 @@ namespace CheckPecas
                     return;
                 }
 
+                if(int.Parse(txtReprovadas.Text) > 10)
+                {
+                    if (txtEmail.Text.Contains("@"))
+                    {
+                        string email = txtEmail.Text;
+                        string local = "";
+                        string dominio = "";
+
+                        for (int i = 0; i < email.Length; i++)
+                        {
+                            if (email.Substring(i, 1) != "@")
+                            {
+                                local = local + email.Substring(i + 1);
+                            }
+                            else
+                            {
+                                dominio = email.Substring(i + 1, email.Length - (i + 1));
+                                i = email.Length;
+                            }
+                        }
+
+                        if(local.Length <= 3)
+                        {
+                            MessageBox.Show("Erro! Digite um email válido!");
+                            return;
+                        }
+                        if(!dominio.Contains("."))
+                        {
+                            MessageBox.Show("Erro! Digite um email válido!");
+                            return;
+                        }
+                    }
+                }
+
                 conexao = new SqlConnection(strConexao);
+
+                conexao.Open();
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conexao;
-                cmd.CommandText = "INSERT INTO FROM tblPecas WHERE codigo = @cod";
-                cmd.Parameters.AddWithValue("@cod", cbPecas.SelectedValue);
-                
+                cmd.CommandText = "INSERT INTO tblRegistros VALUES(@codUser, @codPeca, @dtReg, @aprov, @reprov,@prod, @preju, @email)";
+                cmd.Parameters.AddWithValue("@codUSer", cod);
+                cmd.Parameters.AddWithValue("@codPeca", cbPecas.SelectedValue);
+                cmd.Parameters.AddWithValue("@dtReg", DateTime.Parse(mtxtData.Text));
+                cmd.Parameters.AddWithValue("@aprov", txtAprovadas.Text);
+                cmd.Parameters.AddWithValue("@reprov", txtReprovadas.Text);
+                cmd.Parameters.AddWithValue("@prod", txtProduzidas.Text);
+                cmd.Parameters.AddWithValue("@preju", txtPrejuizo.Text);
+                cmd.Parameters.AddWithValue("@email", txtEmail.Text);
+
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Registro foi efetuado com sucesso!");
+
+                reiniciar();
+
             }
             else 
             {

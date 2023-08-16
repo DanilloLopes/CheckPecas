@@ -43,10 +43,12 @@ namespace CheckPecas
                 if(senha == senhaTbl.ToString())
                 {
 
-                    cmd.CommandText = "SELECT codigo FROM tblUsuarios WHERE loginUsuario = @valor";
-                    cmd.Parameters.AddWithValue("@valor", usuario);
+                    cmd.CommandText = "SELECT codigo FROM tblUsuarios WHERE loginUsuario = @val";
+                    cmd.Parameters.AddWithValue("@val", usuario);
 
                     codigo = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    conexao.Close();
 
                     frmControlePecasProduzidas fControle = new frmControlePecasProduzidas();
                     fControle.cod = codigo;
@@ -64,15 +66,18 @@ namespace CheckPecas
                             cmd.Parameters.AddWithValue("@senha", senha);
                             cmd.ExecuteNonQuery();
                             MessageBox.Show("Cadastro realizado com sucesso!");
+                            conexao.Close();
                         }
                         else
                         {
+                            conexao.Close();
                             txtUsuario.ResetText();
                             txtSenha.ResetText();
                         }
                     }
                     else
                     {
+                        conexao.Close();
                         MessageBox.Show("A senha não confere!");
                     }
                 }
